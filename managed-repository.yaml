@@ -1,0 +1,82 @@
+---
+managed-repositories:
+  #- name: flights
+  #  gh-repo: KongAir/flight-data
+  #  organization: KongAir
+  #  metadata: # Can be sourced from service repo if gh-repo/.konnect.yaml exists
+  #    name: flights
+  #    # Optional, a user defined "bucket" to group Applications
+  #    #   I'm adding here for discussion
+  #    namespace: default
+  #    # Optional, the application configuration should probably be isolated from this
+  #    #   I'm adding here for discussion
+  #    stage: dev
+  #    # Required, the name of the Application
+  #    name: flghts
+  #    # Maps to Konnect labels and conforms to those rules
+  #    labels: 
+  #      owner: flight-data
+
+  #    # Required, the name of the Team that owns the Application
+  #    team-name: flight-data
+
+  #    # I don't think `organization` should be here. GH Org is implied in a repo, and 
+  #    # Konnect Orgs should be independent of application configuration
+  #    # organization: KongAir
+
+  #    # Optional, if not provided some functionality will be limited
+  #    repository: github.com/KongAir/flight-data/flights
+  #    team-name: flight-data
+
+      # Linting / Governace step in the platform pipeline to ensure that some central governance
+      # is followed otherwise reject changes prior to pushing to Konnect.
+      # AND ....
+      # Overlays which supersede the repo's configuration or extend the configuration
+      # prior to reconciling with Konnect
+      #
+      #
+      # John asking about mechanics of applying configuration to Konnect.
+      #    Should we output 1 to many formats or apply to Konnect directly.
+      #  - Konnect SDK / Konnect API (if not golang)
+      #  - Konnect CLI
+      #  - Konnect Operator
+      #    - Staging manifests for push to K8s
+      #  - Konnect Terraform
+      #    - Generating TF manifests to be used in subsequent pipelines
+      #  - Konnect decK
+      #
+      #  We are discussing the auto-application of configuration to critical pipelines
+      #  including GW configuration, etc...
+      #  Should we be only pushing a declarative (easily differenceable) to a PR?
+      #    we think yes
+      #  As part of the orchestor configuration, we ask for "what do you require approvals for?"
+      #     and if approvals are required they result in PRs
+      #     and if not we can apply directly to Konnect
+      #
+      # How do you configure / run the orchestrator?
+      #    |S - Phase 1: CLI with parameters
+      #    |E - Phase 2: Ran in a pipeline
+      #    |L - Phase 3: Ran in cron
+      #    |F - Phase 4: Kubernetes Deployment
+      #       - Phase 5: Konnect Managed Version
+
+      # We also discussed "Customer Zero" and discussed KongAir vs
+      # some other ideas including a "KongBank" or other type of 
+      # financial vertical.  We think this might be beneficial to field teams
+      # that often sell into these verticals.
+      #
+      #
+      #
+      #
+      # Who does what and when?
+      # build a swimlane diagram.
+      #
+      # Let's define the Data Model for the orchestrator
+      # From that, we can build various ways generate assets from it
+      # and be flexible into the future.
+      #
+      # Potentially this could be a discovery operator in K8s
+      #
+      # Start with a "poor mans" version of the data model 
+      # But we could use annotations in Argo / Flux
+      # 

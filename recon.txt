@@ -1,0 +1,52 @@
+# .konnect.yaml schema
+# name: string
+# services: list of service objects
+#   - name:
+#   - version:
+
+# validation failures result in a notification event
+
+func RegisterRepository:
+    - Insert repository URL into managed repository file (e.g. github.com/Kong/super-konnect/managed-repositories.yaml)
+
+func UnRegisterRepository:
+    - Remove repository URL from managed repository file (e.g. github.com/Kong/super-konnect/managed-repositories.yaml)
+    - Clean up Konnect resources (?)
+
+func ValidateRepositories:
+    while true:
+    - Read list of service repositories from main file (e.g. github.com/Kong/super-konnect/managed-repositories.yaml)
+        - Contains repository URLs and potential other metadata for each managed repo
+    - For each managed repository:
+        - Validate Repo:
+            - repository exists
+            - repository contains a `.konnect.yaml` file
+            - if true
+                - validate: `.konnect.yaml`  
+                    - contains a `name` field 
+                    - contains a `services` field
+                - validate: GitHub Actions (?)
+            - if false (This may be the new repo case)
+                - CreateManagedRepoPR()
+                - send notification, continue to next repo
+  
+        - for each service in services:
+            - Validate Service Hub Service:
+                - Read Service Hub Service Policies (e.g. github.com/Kong/super-konnect/service-hub-service-policies.yaml)
+                    - Contains a list of policies that a service must match (Not sure what this is yet)
+                - If false
+                    - create Service Hub Service with policies
+                - If true 
+                    - Validate Service Hub Service matches policies
+
+        - Create / Manage Teams & RBAC permissions
+            - One team per Repo, or does a team definition belong in the .konnect.yaml? 
+    
+func NewRepository: # Maybe called from a Super Konnect web portal
+    - Create GitHub repository
+    - call RegisterRepository()
+
+func CreateManagedRepoPR:
+    - Create .konnect.yaml file
+    - GitHub Actions
+    - Deck / Terraform configuration

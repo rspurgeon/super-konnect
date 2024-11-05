@@ -1,0 +1,29 @@
+apiVersion: configuration.cloud.konghq.com/v1beta1
+
+# Required
+metadata:
+  # Optional, a user defined "bucket" to group Applications
+  #   I'm adding here for discussion
+  namespace: default
+  # Optional, the application configuration should probably be isolated from this
+  #   I'm adding here for discussion
+  stage: dev
+  # Required, the name of the Application
+  name: flghts
+  # Maps to Konnect labels and conforms to those rules
+  labels: 
+    owner: flight-data
+
+  # Required, the name of the Team that owns the Application
+  team-name: flight-data
+
+  # I don't think `organization` should be here. GH Org is implied in a repo, and 
+  # Konnect Orgs should be independent of application configuration
+  # organization: KongAir
+
+  # Optional, if not provided some functionality will be limited
+  repository: github.com/KongAir/flight-data/flights
+
+# Optional, a file path (relative to repository), or a URL
+# If file path provided and no `metadata.repository` URL, then error
+spec: openapi.yaml 
